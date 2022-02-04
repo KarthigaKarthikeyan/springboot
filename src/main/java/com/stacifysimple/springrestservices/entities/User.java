@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 //pojo represents a table in /db
 @Entity
@@ -14,8 +16,12 @@ public class User {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	@NotEmpty(message="mandatory username")
 	@Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
 	private String userName;
+	
+	@Size(min=2,message="name have max 10chars")
 	@Column(name = "FIRST_NAME", length = 50, nullable = false)
 	private String firstName;
 	@Column(name = "LAST_NAME", length = 50, nullable = false)

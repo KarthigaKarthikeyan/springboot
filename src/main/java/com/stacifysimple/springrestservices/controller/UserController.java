@@ -3,6 +3,8 @@ package com.stacifysimple.springrestservices.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.stacifysimple.springrestservices.entities.User;
 import com.stacifysimple.springrestservices.exception.UserExistsException;
+import com.stacifysimple.springrestservices.exception.UserNameNotFoundException;
 import com.stacifysimple.springrestservices.exception.UserNotFoundException;
 import com.stacifysimple.springrestservices.service.UserService;
 
@@ -34,7 +37,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/users")
-	public ResponseEntity<Void> createUser(@RequestBody User user,UriComponentsBuilder uriComponentsBuilder) {
+	public ResponseEntity<Void> createUser(@Valid @RequestBody User user,UriComponentsBuilder uriComponentsBuilder) {
 		try {
 			userService.createUser(user);
 			HttpHeaders httpHeaders = new HttpHeaders();
@@ -71,9 +74,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/users/byusername/{userName}") 
-	public User getUserByUsername(@PathVariable("userName")String userName) {
+	public User getUserByUsername(@PathVariable("userName")String userName) throws UserNameNotFoundException {
 		
-		return userService.getUserByUsername(userName);
+		User user =  userService.getUserByUsername(userName);
+		if(user == null) {
+			throw new UserNameNotFoundException("Username"+userName +" User name not found in repository");
+		}
+		return user;
 	}
 
 }
