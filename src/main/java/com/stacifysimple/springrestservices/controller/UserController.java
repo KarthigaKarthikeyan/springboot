@@ -45,7 +45,7 @@ public class UserController {
 		try {
 			userService.createUser(user);
 			HttpHeaders httpHeaders = new HttpHeaders();
-			httpHeaders.setLocation(uriComponentsBuilder.path("/users/{id}").buildAndExpand(user.getId()).toUri());
+			httpHeaders.setLocation(uriComponentsBuilder.path("/users/{id}").buildAndExpand(user.getUserId()).toUri());
 			return new ResponseEntity<Void>(httpHeaders,HttpStatus.CREATED);
 			
 			
