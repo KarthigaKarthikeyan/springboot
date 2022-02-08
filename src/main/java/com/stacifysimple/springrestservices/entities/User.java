@@ -13,10 +13,13 @@ import javax.validation.constraints.Size;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+
 //pojo represents a table in /db
 @Entity
 //denotes the table name and schema (table seggrated within appln eg:,schema="usrmgmt")
 @Table(name = "user")
+@JsonFilter(value = "userFilter")
 public class User extends RepresentationModel<User>{
 	@Id
 	@GeneratedValue
