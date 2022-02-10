@@ -27,6 +27,9 @@ import com.stacifysimple.springrestservices.exception.UserNameNotFoundException;
 import com.stacifysimple.springrestservices.exception.UserNotFoundException;
 import com.stacifysimple.springrestservices.service.UserService;
 
+import io.swagger.annotations.Api;
+
+@Api(tags="User Mgmt service" ,value ="UserController",description="Controller description")
 @RestController
 @Validated
 @RequestMapping(value = "/users")
